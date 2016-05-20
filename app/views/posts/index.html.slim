@@ -1,0 +1,23 @@
+h1 All posts
+p#notice = notice
+
+= will_paginate @posts 
+= link_to 'Create Post', new_post_path
+table
+  tr 
+    th = 'title'
+    th = 'user_mail'
+    th = 'date'
+    th = 'action'
+  - @posts.each do |post|
+    tr 
+      td = link_to post.title, post_path(post)
+   	  td = post.user.email
+      td = post.date.strftime("%-d %B %Y")
+   	  td
+        div 
+        = link_to 'Edit', edit_post_path(post)
+        = " " 
+        = link_to 'Delete', post_path(post), method: :delete
+        = " "
+= will_paginate @posts 

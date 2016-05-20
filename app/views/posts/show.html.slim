@@ -1,0 +1,43 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @post.title
+p
+  strong Content:
+  = @post.content
+p
+  strong User:
+  = @post.user.email
+
+= link_to 'Edit', edit_post_path(@post)
+'|
+= link_to 'Back', posts_path
+
+ 
+h6 Comments
+- @post.comments.each do |comment| 
+  p
+    strong Commenter:
+    = comment.user.try(:email) 
+  p
+ 
+  p
+    strong Comment:
+    = comment.body 
+  p
+  = link_to 'edit', edit_post_comment_path(@post, comment) if comment.created_at > 15.minutes.ago
+ 
+h6 Add a comment: 
+= form_for([@post, @post.comments.build]) do |f| 
+  p
+    = f.hidden_field :user_id, value: current_user.id
+
+  p
+  p
+    = f.label :body
+    = f.text_area :body 
+  p
+  p
+    = f.submit 
+  p
