@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     resources :comments
   end
 
-  match '/help', to: 'static_pages#help', via: 'get'
 
 
 
