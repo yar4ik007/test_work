@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'statics/home'
+  get 'tags/:tag', to: 'articles#index', as: :tag
+
   resources :posts
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
@@ -38,7 +41,7 @@ Rails.application.routes.draw do
   #   resources :products do
   #     resources :comments, :sales
   #     resource :seller
-  #   end
+  #   endz
 
   # Example resource route with more complex sub-resources:
   #   resources :products do

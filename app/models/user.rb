@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :comments
 
+  acts_as_taggable_on :skills, :interests
 
   class << self
     def current_user=(user)

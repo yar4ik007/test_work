@@ -8,6 +8,8 @@ class PostsController < ApplicationController
   def index
     @posts = if params[:my].present?
       Post.where(user_id: current_user.id).paginate(:page => params[:page], :per_page => 5)
+    elsif params[:tag].present?
+      Post.tagged_with(params[:tag])
     else
       Post.all.paginate(:page => params[:page], :per_page => 5)
     end
@@ -48,7 +50,9 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1.json
   def update
     respond_to do |format|
-      if @post.update(post_params)
+      attrs = post_params
+      #attrs[:tag_list] = attrs[:tag_list].slice(',')
+      if @post.update(attrs)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -83,7 +87,7 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :content, :date, :user_id)
+      params.require(:post).permit(:title, :content, :date, :user_id, :tag_list)
     end
 
 end
